@@ -1,0 +1,76 @@
+{
+  "format": "flo-android-menu-export",
+  "format_version": 1,
+  "source": { "file": "D:/Kode/Ts/FloCafe/tablet-menu-export.json", "package": "id.joyhotcold.pos", "database": "joy_pos_android", "schema_version": 7 },
+  "categories": [
+    {
+      "id": "coffee", "name": "Coffee",
+      "products": [
+        { "id": "a5063f85-196b-4219-a4a5-5d44713d5f6a", "name": "Americano", "price": 15000, "is_active": true, "favorite": true },
+        { "id": "3e878c70-ff07-49fe-9b97-b09ee6538f3f", "name": "Mokapot", "price": 15000, "is_active": true },
+        { "id": "aa182371-9aaf-4b40-a452-7928c91c066d", "name": "Tubruk", "price": 10000, "is_active": true },
+        { "id": "d6587706-e542-4a42-8c2c-be1f639f408c", "name": "Tubruk filter", "price": 10000, "is_active": true },
+        { "id": "20954af2-24fb-415a-b0c1-fbafe4847a6c", "name": "Vdrip", "price": 15000, "is_active": true }
+      ]
+    },
+    {
+      "id": "exotic", "name": "Exotic",
+      "products": [
+        { "id": "fc49aec1-f238-4074-94ac-dc1e3e29935a", "name": "Energy bomb", "price": 20000, "is_active": true },
+        { "id": "2a6caf7d-31a0-4cd6-94ed-39e0273a021e", "name": "Espresso bomb", "price": 16000, "is_active": true, "favorite": true },
+        { "id": "summer-mocktail", "name": "Summer mocktail", "price": 16000, "is_active": true },
+        { "id": "winter-mocktail", "name": "Winter mocktail", "price": 16000, "is_active": true }
+      ]
+    },
+    {
+      "id": "latte", "name": "Latte",
+      "products": [
+        { "id": "9e907bd4-a13f-4f3f-ac84-2d8cc4ae993e", "name": "Butterscotch", "price": 18000, "is_active": true, "favorite": true },
+        { "id": "2ce9a829-67f0-485a-86f6-0ae6bc25df18", "name": "Hazelnut", "price": 18000, "is_active": true },
+        { "id": "a631c247-53f6-48c4-bc1d-34589d47cbcc", "name": "Raspberry", "price": 18000, "is_active": true },
+        { "id": "ab8d2bf5-ad8a-4e4a-b6c1-e3115cc2d8dd", "name": "Signature", "price": 18000, "is_active": true },
+        { "id": "9335c5af-c3d0-4729-a296-b4c67e8f85f9", "name": "Tanggal tua", "price": 12000, "is_active": true },
+        { "id": "a423ce47-846c-4a18-92d3-1adc179bb533", "name": "Tiramisu", "price": 18000, "is_active": true }
+      ]
+    },
+    {
+      "id": "main-course", "name": "Main course",
+      "products": [
+        { "id": "efc131cb-02a5-4b84-8b1b-38fe02bc0b33", "name": "Burger", "price": 21000, "is_active": true },
+        { "id": "3a5a6b49-a74a-466e-9ef8-9488d82d222e", "name": "Joy mie", "price": 17000, "is_active": true },
+        { "id": "e5dea22d-ebdd-4bee-8425-2da5ac4c67d8", "name": "Nasi goreng", "price": 23000, "is_active": true, "favorite": true }
+      ]
+    },
+    {
+      "id": "non-coffee", "name": "Non coffee",
+      "products": [
+        { "id": "6eaef5bb-c17c-40f0-90b8-cab423cee884", "name": "Blackcurrant tea", "price": 13000, "is_active": true },
+        { "id": "d984bd85-f01b-46d8-a290-543cfc15846b", "name": "Blueberry tea", "price": 13000, "is_active": true },
+        { "id": "2ad9bf5d-36ae-4d74-868d-048f253d2eb2", "name": "Joy choco", "price": 20000, "is_active": true },
+        { "id": "e60b4818-e9ad-4c2c-a0ec-89d8447581f1", "name": "Joy choco creamy", "price": 22000, "is_active": true, "favorite": true },
+        { "id": "125033db-02ff-47f3-9b84-361f6c87f851", "name": "Joy choco fruity", "price": 22000, "is_active": true },
+        { "id": "bf59c394-3ad0-405c-a4fa-d864e12205d4", "name": "Lemon tea", "price": 13000, "is_active": true, "favorite": true },
+        { "id": "e1c9045f-ddf3-448b-b437-5fc0d7d4580b", "name": "Manggo tea", "price": 13000, "is_active": true },
+        { "id": "df027a5c-0dfb-437d-9c40-ec9727a85663", "name": "Mineral water", "price": 5000, "is_active": true },
+        { "id": "b462e944-4429-4587-a5a6-40260eb0a7e8", "name": "Original tea", "price": 10000, "is_active": true },
+        { "id": "d4162e68-fe83-4e1f-b593-297501c882ee", "name": "Strawberry tea", "price": 13000, "is_active": true }
+      ]
+    },
+    {
+      "id": "snacks", "name": "Snacks",
+      "products": [
+        { "id": "8223018d-8032-424b-857e-8d4a43e561fc", "name": "French fries", "price": 15000, "is_active": true },
+        { "id": "372d5c7c-8294-454b-b32d-d597b0e30638", "name": "Joy bean", "price": 21000, "is_active": true },
+        { "id": "d8a18225-546c-4350-b409-66e455410ef1", "name": "Mariam", "price": 15000, "is_active": true },
+        { "id": "5665f838-5c1b-4e2d-9f86-0d2a83d30e6c", "name": "Mix platter", "price": 35000, "is_active": true },
+        { "id": "40ff2a81-0727-4f26-83c0-7d2888f8e8de", "name": "Nugget saus keju", "price": 15000, "is_active": true },
+        { "id": "1f57e9c7-ca43-4591-8dc3-97259ad41a0a", "name": "Onion ring", "price": 16000, "is_active": true },
+        { "id": "a71714ae-429a-4d1f-9738-788657c9e114", "name": "Pisang bakar coklat keju", "price": 13000, "is_active": true },
+        { "id": "8107894e-7a6a-4495-a62c-f14f63bcd6e3", "name": "Ropang coklat", "price": 15000, "is_active": true },
+        { "id": "3a5174d5-95ee-4a99-820b-d2c453f70f7b", "name": "Ropang sandwich", "price": 15000, "is_active": true },
+        { "id": "56465920-8e81-4070-b43e-f3cdfba8014b", "name": "Sourdough", "price": 15000, "is_active": true },
+        { "id": "354edb46-85f2-47f0-a82c-824f2ccf906d", "name": "Wadges", "price": 18000, "is_active": true, "favorite": true }
+      ]
+    }
+  ]
+}
