@@ -20,16 +20,16 @@ const links = {
 const copy = {
   id: {
     nav: ['Tentang', 'Menu', 'Cocok untuk', 'Fasilitas', 'Lokasi', 'FAQ'],
-    heroEyebrow: 'Kafe komunitas · Sidomulyo, Kota Batu',
-    heroTitle: <>Ngopi. Main.<br /><em>Kumpul.</em></>,
-    heroLede: 'Kopi lokal, Wi-Fi, board game, dan meja lega untuk 4–6 orang—buat kerja, ngobrol, atau seru-seruan bareng.',
+    heroEyebrow: 'Cafe Joy Hot and Cold · Sidomulyo, Kota Batu',
+    heroTitle: <>Cafe di<br />Sidomulyo,<br /><em>Kota Batu.</em></>,
+    heroLede: 'JoyCafe menyediakan kopi lokal, Wi-Fi, board game, dan meja lega untuk 4–6 orang—buat kerja, ngobrol, atau seru-seruan bareng.',
     directions: 'Petunjuk arah', menu: 'Lihat menu', whatsapp: 'Tanya via WhatsApp',
     openDaily: 'Buka setiap hari', groupTable: 'Satu meja', groupValue: 'Nyaman untuk 4–6 orang', addressLabel: 'Alamat',
     facts: [['20', 'kursi indoor'], ['40', 'Mbps Wi-Fi*'], ['4–6', 'orang per meja'], ['Cash', '& QRIS']],
     wifiNote: '*Kecepatan yang dilaporkan; kondisi jaringan dapat berubah.',
     aboutEyebrow: 'Satu meja, banyak cerita',
-    aboutTitle: 'Kafe yang memang dibuat untuk berkumpul.',
-    aboutText: 'JoyCafe Hot&Cold lahir dari ide sederhana: membuat tempat bermain bersama yang juga menyajikan kopi dan camilan. Di sini, meja besar, permainan, dan obrolan menjadi bagian dari pengalaman—bukan tambahan.',
+    aboutTitle: 'Cafe komunitas di Sidomulyo yang dibuat untuk berkumpul.',
+    aboutText: 'Cafe Joy Hot and Cold—juga dikenal sebagai JoyCafe Hot&Cold atau JoyCafe—berada di Jl. Bukit Berbunga No. 230, Sidomulyo, Kota Batu. Cafe ini memadukan kopi, makanan, meja besar, permainan, dan ruang untuk mengobrol atau bekerja.',
     pillars: [
       ['Meja lega', 'Meja untuk 4–6 orang, cocok untuk komunitas, keluarga, rapat santai, atau teman sepermainan.'],
       ['Main bareng', 'Catur, Monopoly, dan pilihan permainan lain tersedia sesuai stok saat berkunjung.'],
@@ -55,12 +55,14 @@ const copy = {
       ['Board game', 'Catur, Monopoly, dan lainnya', 'game'], ['Pet-friendly', 'Hewan wajib menggunakan leash', 'paw'],
       ['Area merokok', 'Tersedia', 'smoke'], ['Pembayaran', 'Tunai dan QRIS', 'wallet'],
     ],
-    visitEyebrow: 'Datang ke JoyCafe', visitTitle: 'Temukan kami di Sidomulyo.',
+    visitEyebrow: 'Cafe di Sidomulyo, Kota Batu', visitTitle: 'Temukan Cafe Joy di Sidomulyo.',
     visitText: 'Jl. Bukit Berbunga No. 230, Sidomulyo, Kec. Batu, Kota Batu, Jawa Timur 65317, Indonesia.',
     landmark: 'Berada di tepi jalan utama. Gunakan tautan Google Maps untuk rute terbaru.',
     hours: 'Setiap hari · 12.00–00.00', contact: 'Hubungi', social: 'Ikuti keseharian JoyCafe',
     faqEyebrow: 'Sebelum berangkat', faqTitle: 'Pertanyaan yang sering muncul.',
     faqs: [
+      ['Cafe apa yang ada di daerah Sidomulyo, Kota Batu?', 'Cafe Joy Hot and Cold, juga dikenal sebagai JoyCafe, berada di Jl. Bukit Berbunga No. 230, Sidomulyo, Kecamatan Batu, Kota Batu. Cafe buka setiap hari pukul 12.00–00.00.'],
+      ['Berapa kisaran harga menu JoyCafe?', 'Harga menu aktif berada pada kisaran Rp5.000–Rp35.000 dan sudah termasuk pajak serta layanan. Ketersediaan dapat berubah.'],
       ['Apakah ada Wi-Fi dan stopkontak?', 'Ya. Wi-Fi dilaporkan mencapai sekitar 40 Mbps untuk unduh dan unggah. Stopkontak tersedia di beberapa tempat duduk; posisi terbaik dapat ditanyakan kepada barista.'],
       ['Apakah JoyCafe cocok untuk kerja atau belajar?', 'Ya. Tersedia meja, Wi-Fi, dan beberapa stopkontak tanpa batas waktu laptop yang dinyatakan. Karena lokasinya di tepi jalan utama, tingkat kebisingan dapat berubah.'],
       ['Apakah tersedia board game?', 'Ya. Catur dan Monopoly termasuk permainan yang disebut tersedia. Koleksi dapat berubah dan terus diperbarui, jadi tanyakan permainan yang tersedia saat berkunjung.'],
@@ -71,19 +73,19 @@ const copy = {
       ['Apa metode pembayarannya?', 'JoyCafe menerima pembayaran tunai dan QRIS. Harga menu yang ditampilkan sudah termasuk pajak dan layanan.'],
     ],
     closingEyebrow: 'Siap isi meja?', closingTitle: 'Datang, duduk, dan temukan favoritmu.',
-    footerNote: 'Informasi dan harga diperbarui 30 Agustus 2026. Ketersediaan dapat berubah.',
+    footerNote: 'Informasi dan harga diperbarui 31 Agustus 2026. Ketersediaan dapat berubah.',
   },
   en: {
     nav: ['About', 'Menu', 'Best for', 'Facilities', 'Visit', 'FAQ'],
-    heroEyebrow: 'Community café · Sidomulyo, Batu',
-    heroTitle: <>Coffee. Games.<br /><em>Good company.</em></>,
-    heroLede: 'Local coffee, Wi-Fi, board games, and roomy tables for groups of 4–6—made for work sessions, conversations, and time together.',
+    heroEyebrow: 'Cafe Joy Hot and Cold · Sidomulyo, Batu',
+    heroTitle: <>A café in<br />Sidomulyo,<br /><em>Batu City.</em></>,
+    heroLede: 'JoyCafe offers local coffee, Wi-Fi, board games, and roomy tables for groups of 4–6—made for work sessions, conversations, and time together.',
     directions: 'Get directions', menu: 'View menu', whatsapp: 'Ask on WhatsApp',
     openDaily: 'Open every day', groupTable: 'One table', groupValue: 'Comfortable for 4–6 people', addressLabel: 'Address',
     facts: [['20', 'indoor seats'], ['40', 'Mbps Wi-Fi*'], ['4–6', 'people per table'], ['Cash', '& QRIS']],
     wifiNote: '*Reported speed; network conditions may vary.',
-    aboutEyebrow: 'One table, many stories', aboutTitle: 'A café genuinely designed for gathering.',
-    aboutText: 'JoyCafe Hot&Cold began with a simple idea: create a place to play together that also serves coffee and casual food. Here, shared tables, games, and conversation are part of the experience—not an afterthought.',
+    aboutEyebrow: 'One table, many stories', aboutTitle: 'A community café in Sidomulyo designed for gathering.',
+    aboutText: 'Cafe Joy Hot and Cold—also known as JoyCafe Hot&Cold or JoyCafe—is located at Jl. Bukit Berbunga No. 230, Sidomulyo, Batu City. It combines coffee, casual food, shared tables, games, and space to talk or work.',
     pillars: [
       ['Roomy tables', 'Tables for 4–6, suited to communities, families, relaxed meetings, and game groups.'],
       ['Play together', 'Chess, Monopoly, and other games are available depending on the day.'],
@@ -109,12 +111,14 @@ const copy = {
       ['Board games', 'Chess, Monopoly, and more', 'game'], ['Pet-friendly', 'Pets must remain leashed', 'paw'],
       ['Smoking area', 'Available', 'smoke'], ['Payment', 'Cash and QRIS', 'wallet'],
     ],
-    visitEyebrow: 'Visit JoyCafe', visitTitle: 'Find us in Sidomulyo.',
+    visitEyebrow: 'Café in Sidomulyo, Batu City', visitTitle: 'Find Cafe Joy in Sidomulyo.',
     visitText: 'Jl. Bukit Berbunga No. 230, Sidomulyo, Batu District, Batu City, East Java 65317, Indonesia.',
     landmark: 'Located beside the main road. Use the Google Maps link for the latest route.',
     hours: 'Every day · 12:00–00:00', contact: 'Contact', social: 'Follow daily life at JoyCafe',
     faqEyebrow: 'Before you visit', faqTitle: 'Frequently asked questions.',
     faqs: [
+      ['Which café is located in Sidomulyo, Batu City?', 'Cafe Joy Hot and Cold, also known as JoyCafe, is at Jl. Bukit Berbunga No. 230, Sidomulyo, Batu City. It is open daily from 12:00 to midnight.'],
+      ['What is the JoyCafe menu price range?', 'Current menu prices range from Rp5,000 to Rp35,000 and include tax and service. Availability may change.'],
       ['Is Wi-Fi available, and are there power outlets?', 'Yes. Wi-Fi has been reported at around 40 Mbps download and upload. Outlets are available at selected seats; ask the barista for the best spot.'],
       ['Is JoyCafe suitable for working or studying?', 'Yes. Tables, Wi-Fi, and selected power outlets are available, with no stated laptop time limit. Because the café is beside a main road, noise levels can vary.'],
       ['Are board games available?', 'Yes. Chess and Monopoly are among the games stated as available. The collection may change and expand, so ask what is available when you visit.'],
@@ -125,7 +129,7 @@ const copy = {
       ['Which payment methods are accepted?', 'JoyCafe accepts cash and QRIS. Displayed menu prices include tax and service.'],
     ],
     closingEyebrow: 'Ready to fill the table?', closingTitle: 'Come in, take a seat, and find your favorite.',
-    footerNote: 'Information and prices updated 30 August 2026. Availability may change.',
+    footerNote: 'Information and prices updated 31 August 2026. Availability may change.',
   },
 };
 
@@ -153,11 +157,11 @@ function App() {
   useEffect(() => {
     document.documentElement.lang = lang;
     document.title = lang === 'id'
-      ? 'JoyCafe Hot&Cold | Kafe Board Game di Sidomulyo, Batu'
-      : 'JoyCafe Hot&Cold | Board Game Café in Sidomulyo, Batu';
+      ? 'Cafe Joy Hot and Cold | Cafe di Sidomulyo, Kota Batu'
+      : 'Cafe Joy Hot and Cold | Café in Sidomulyo, Batu City';
     document.querySelector('meta[name="description"]')?.setAttribute('content', lang === 'id'
-      ? 'Kafe komunitas di Sidomulyo, Kota Batu, dengan board game, meja 4–6 orang, Wi-Fi, kopi lokal, makanan, dan camilan.'
-      : 'A community café in Sidomulyo, Batu, with board games, tables for 4–6, Wi-Fi, local coffee, meals, and snacks.');
+      ? 'Cari cafe di Sidomulyo, Kota Batu? Cafe Joy Hot and Cold (JoyCafe) buka setiap hari pukul 12.00–00.00 dengan kopi lokal, Wi-Fi, board game, makanan, dan camilan.'
+      : 'Cafe Joy Hot and Cold is a community café in Sidomulyo, Batu City, with board games, tables for 4–6, Wi-Fi, local coffee, meals, and snacks.');
   }, [lang]);
 
   const visibleMenu = useMemo(() => {
@@ -246,7 +250,7 @@ function App() {
               ))}
             </div>
             {!visibleMenu.length && <div className="empty-state"><Coffee size={36} /><p>{t.noResult}</p><button onClick={() => { setQuery(''); setCategory('all'); }}>{t.clearSearch}</button></div>}
-            <p className="menu-updated">{lang === 'id' ? 'Menu dan harga diperiksa 30 Agustus 2026.' : 'Menu and prices checked 30 August 2026.'}</p>
+            <p className="menu-updated">{lang === 'id' ? 'Menu dan harga diperiksa 31 Agustus 2026.' : 'Menu and prices checked 31 August 2026.'}</p>
           </div>
         </section>
 

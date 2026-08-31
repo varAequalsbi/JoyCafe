@@ -1,0 +1,25 @@
+{
+  "name": "Cafe Joy Hot and Cold",
+  "alternateNames": ["JoyCafe Hot&Cold", "JoyCafe", "Cafe Joy Hot & Cold", "Joy Cafe Batu"],
+  "canonicalUrl": "https://joycafe.biz.id/",
+  "category": ["Cafe", "Coffee shop", "Community cafe", "Board game cafe"],
+  "address": {
+    "street": "Jl. Bukit Berbunga No. 230",
+    "village": "Sidomulyo",
+    "district": "Batu",
+    "city": "Kota Batu",
+    "province": "Jawa Timur",
+    "postalCode": "65317",
+    "country": "Indonesia"
+  },
+  "coordinates": {"latitude": -7.843417, "longitude": 112.528293},
+  "phone": "+6282330777522",
+  "email": "joycafe.kamu@gmail.com",
+  "openingHours": "Every day 12:00-00:00 Asia/Jakarta",
+  "priceRangeIdr": {"minimum": 5000, "maximum": 35000},
+  "paymentMethods": ["Cash", "QRIS"],
+  "features": ["Wi-Fi", "Board games", "Tables for 4-6 people", "Power outlets at selected seats", "Limited free parking", "Pet-friendly with leash", "Smoking area"],
+  "googleMaps": "https://maps.app.goo.gl/4eU1wknEXErkmf2JA",
+  "instagram": "https://www.instagram.com/joycafe.sosialita/",
+  "lastVerified": "2026-08-31"
+}
