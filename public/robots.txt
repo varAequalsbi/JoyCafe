@@ -4,4 +4,4 @@ Allow: /
 User-agent: OAI-SearchBot
 Allow: /
 
-Sitemap: https://joycafe-batu.muhalfarabi2012.chatgpt.site/sitemap.xml
+Sitemap: https://joycafe-batu.vercel.app/sitemap.xml
