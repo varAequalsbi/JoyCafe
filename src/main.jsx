@@ -1,10 +1,12 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
   ArrowRight, Bike, Camera, CarFront, Check, ChevronDown, Clock3, Coffee, ExternalLink,
   Gamepad2, Languages, MapPin, Menu as MenuIcon, PawPrint, Phone,
-  Search, Sparkles, UsersRound, WalletCards, Wifi, X, Zap,
+  Download, ImagePlus, RotateCcw, Search, Share2, Sparkles, Upload, UsersRound,
+  WalletCards, Wifi, X, Zap,
 } from 'lucide-react';
+import { SiInstagram } from 'react-icons/si';
 import logo from '../image.png';
 import menuData from './data/menu.json';
 import './styles.css';
@@ -145,6 +147,335 @@ function track(name) {
 
 function Brand() {
   return <><img src={logo} alt="" /><span>JoyCafe <small>Hot &amp; Cold</small></span></>;
+}
+
+const loadCanvasImage = (source) => new Promise((resolve, reject) => {
+  const image = new Image();
+  image.onload = () => resolve(image);
+  image.onerror = reject;
+  image.src = source;
+});
+
+function wrapCanvasText(context, text, maxWidth) {
+  const words = text.trim().split(/\s+/);
+  const lines = [];
+  let current = '';
+  words.forEach((word) => {
+    const test = current ? `${current} ${word}` : word;
+    if (context.measureText(test).width > maxWidth && current) {
+      lines.push(current);
+      current = word;
+    } else current = test;
+  });
+  if (current) lines.push(current);
+  return lines.slice(0, 3);
+}
+
+function StoryStudio() {
+  const [photo, setPhoto] = useState('');
+  const [caption, setCaption] = useState('Ngopi dulu, cerita kemudian.');
+  const [zoom, setZoom] = useState(1);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [status, setStatus] = useState('');
+  const fileInput = useRef(null);
+  const preview = useRef(null);
+  const drag = useRef(null);
+  const date = useMemo(() => new Intl.DateTimeFormat('id-ID', {
+    weekday: 'long', day: 'numeric', month: 'long',
+  }).format(new Date()), []);
+
+  useEffect(() => {
+    document.title = 'Story Harian JoyCafe';
+    return () => { if (photo) URL.revokeObjectURL(photo); };
+  }, [photo]);
+
+  const choosePhoto = (event) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    if (photo) URL.revokeObjectURL(photo);
+    setPhoto(URL.createObjectURL(file));
+    setZoom(1);
+    setPosition({ x: 0, y: 0 });
+    setStatus('Foto siap disesuaikan.');
+  };
+
+  const reset = () => {
+    if (photo) URL.revokeObjectURL(photo);
+    setPhoto('');
+    setZoom(1);
+    setPosition({ x: 0, y: 0 });
+    setStatus('');
+    if (fileInput.current) fileInput.current.value = '';
+  };
+
+  const startDrag = (event) => {
+    if (!photo) return;
+    event.currentTarget.setPointerCapture(event.pointerId);
+    drag.current = { x: event.clientX, y: event.clientY, origin: position };
+  };
+
+  const movePhoto = (event) => {
+    if (!drag.current || !preview.current) return;
+    const bounds = preview.current.getBoundingClientRect();
+    const clamp = (value) => Math.max(-0.42, Math.min(0.42, value));
+    setPosition({
+      x: clamp(drag.current.origin.x + (event.clientX - drag.current.x) / bounds.width),
+      y: clamp(drag.current.origin.y + (event.clientY - drag.current.y) / bounds.height),
+    });
+  };
+
+  const stopDrag = () => { drag.current = null; };
+
+  const makeStory = async () => {
+    if (!photo) return null;
+    await document.fonts?.ready;
+    const [userPhoto, brandLogo] = await Promise.all([loadCanvasImage(photo), loadCanvasImage(logo)]);
+    const canvas = document.createElement('canvas');
+    canvas.width = 1080;
+    canvas.height = 1920;
+    const context = canvas.getContext('2d');
+    const cover = Math.max(canvas.width / userPhoto.naturalWidth, canvas.height / userPhoto.naturalHeight) * zoom;
+    const width = userPhoto.naturalWidth * cover;
+    const height = userPhoto.naturalHeight * cover;
+    const x = (canvas.width - width) / 2 + position.x * canvas.width;
+    const y = (canvas.height - height) / 2 + position.y * canvas.height;
+    context.drawImage(userPhoto, x, y, width, height);
+
+    const shade = context.createLinearGradient(0, 0, 0, canvas.height);
+    shade.addColorStop(0, 'rgba(8,24,17,.58)');
+    shade.addColorStop(.28, 'rgba(8,24,17,0)');
+    shade.addColorStop(.58, 'rgba(8,24,17,0)');
+    shade.addColorStop(1, 'rgba(8,24,17,.88)');
+    context.fillStyle = shade;
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    context.strokeStyle = 'rgba(255,255,255,.34)';
+    context.lineWidth = 3;
+    context.strokeRect(3, 3, canvas.width - 6, canvas.height - 6);
+
+    context.save();
+    context.beginPath();
+    context.arc(108, 112, 48, 0, Math.PI * 2);
+    context.clip();
+    context.drawImage(brandLogo, 60, 64, 96, 96);
+    context.restore();
+    context.strokeStyle = '#f3c54e';
+    context.lineWidth = 4;
+    context.beginPath();
+    context.arc(108, 112, 50, 0, Math.PI * 2);
+    context.stroke();
+    context.fillStyle = '#fff7e8';
+    context.font = "800 32px 'DM Sans', sans-serif";
+    context.fillText('JOYCAFE', 178, 123);
+
+    context.font = "800 24px 'DM Sans', sans-serif";
+    const dateText = date.toUpperCase();
+    const pillWidth = context.measureText(dateText).width + 54;
+    context.fillStyle = '#f3c54e';
+    context.beginPath();
+    context.roundRect(1010 - pillWidth, 78, pillWidth, 68, 34);
+    context.fill();
+    context.fillStyle = '#21352c';
+    context.textAlign = 'center';
+    context.fillText(dateText, 1010 - pillWidth / 2, 120);
+    context.textAlign = 'left';
+
+    context.fillStyle = '#f3c54e';
+    context.font = "900 23px 'DM Sans', sans-serif";
+    context.fillText('SIDOMULYO · KOTA BATU · 12.00–00.00', 68, 1540);
+    context.fillStyle = '#fff7e8';
+    context.font = "700 82px 'Fraunces', serif";
+    const lines = wrapCanvasText(context, caption || 'Cerita hari ini.', 900);
+    lines.forEach((line, index) => context.fillText(line, 68, 1642 + index * 82));
+    context.fillStyle = 'rgba(255,255,255,.82)';
+    context.font = "800 26px 'DM Sans', sans-serif";
+    context.fillText('@joycafe.sosialita', 68, 1850);
+    context.textAlign = 'right';
+    context.fillStyle = '#f3c54e';
+    context.fillText('JOYCAFE · HOT & COLD', 1012, 1850);
+
+    return new Promise((resolve) => canvas.toBlob(resolve, 'image/png'));
+  };
+
+  const downloadStory = async () => {
+    setStatus('Menyiapkan story…');
+    const blob = await makeStory();
+    if (!blob) return;
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement('a');
+    anchor.href = url;
+    anchor.download = `joycafe-story-${new Date().toISOString().slice(0, 10)}.png`;
+    anchor.click();
+    URL.revokeObjectURL(url);
+    setStatus('Story berhasil diunduh.');
+  };
+
+  const shareStory = async () => {
+    const blob = await makeStory();
+    if (!blob) return;
+    const file = new File([blob], `joycafe-story-${new Date().toISOString().slice(0, 10)}.png`, { type: 'image/png' });
+    if (navigator.canShare?.({ files: [file] })) {
+      await navigator.share({ files: [file], title: 'JoyCafe Story' }).catch(() => {});
+      setStatus('Pilih Instagram dari menu bagikan.');
+    } else {
+      await downloadStory();
+      setStatus('Browser ini tidak mendukung berbagi langsung—file sudah diunduh.');
+    }
+  };
+
+  return (
+    <main className="story-studio">
+      <header className="story-topbar">
+        <a className="story-brand" href="/" aria-label="Kembali ke JoyCafe"><Brand /></a>
+        <span><span className="story-live-dot" /> Pembuat story harian</span>
+      </header>
+
+      <section className="story-workspace">
+        <div className="story-copy">
+          <p className="story-kicker">JOYCAFE STORY MAKER</p>
+          <h1>Bikin story hari ini.</h1>
+          <p>Masukkan fotomu ke bingkai JoyCafe, atur tampilannya, lalu unduh dalam ukuran Instagram Story.</p>
+          <ol className="story-steps" aria-label="Cara membuat story">
+            <li><b>01</b><span><strong>Pilih foto</strong><small>Dari kamera atau galeri</small></span></li>
+            <li><b>02</b><span><strong>Sesuaikan</strong><small>Geser dan perbesar foto</small></span></li>
+            <li><b>03</b><span><strong>Unduh &amp; unggah</strong><small>Siap untuk Instagram Story</small></span></li>
+          </ol>
+          <p className="story-privacy">Foto diproses di perangkatmu dan tidak dikirim ke server.</p>
+        </div>
+
+        <div className="story-preview-column">
+          <div className="story-phone-shell">
+            <div ref={preview} className={`story-canvas ${photo ? 'has-photo' : ''}`} aria-label="Pratinjau Instagram Story"
+              onPointerDown={startDrag} onPointerMove={movePhoto} onPointerUp={stopDrag} onPointerCancel={stopDrag}>
+              {photo ? (
+                <img className="story-user-photo" src={photo} alt="Foto pilihan untuk story"
+                  style={{ transform: `translate(${position.x * 100}%, ${position.y * 100}%) scale(${zoom})` }} draggable="false" />
+              ) : (
+                <button className="story-empty" onClick={() => fileInput.current?.click()}>
+                  <span><ImagePlus /></span>
+                  <strong>Masukkan fotomu</strong>
+                  <small>JPG, PNG, atau WEBP</small>
+                </button>
+              )}
+              <div className="story-frame" aria-hidden="true">
+                <div className="story-frame-top">
+                  <div className="story-frame-logo"><img src={logo} alt="" /><b>JOYCAFE</b></div>
+                  <span>{date}</span>
+                </div>
+                <div className="story-frame-bottom">
+                  <span className="story-frame-place">SIDOMULYO · KOTA BATU · 12.00–00.00</span>
+                  <p>{caption || 'Cerita hari ini.'}</p>
+                  <div><span>@joycafe.sosialita</span><SiInstagram /></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <span className="story-size">1080 × 1920 px · 9:16</span>
+          {photo && <span className="story-drag-hint">Geser foto langsung pada pratinjau</span>}
+        </div>
+
+        <aside className="story-controls">
+          <div className="story-control-heading"><span>Editor</span><small>Story hari ini</small></div>
+          <input ref={fileInput} type="file" accept="image/jpeg,image/png,image/webp" onChange={choosePhoto} hidden />
+          <button className="story-upload" onClick={() => fileInput.current?.click()}><Upload />{photo ? 'Ganti foto' : 'Pilih foto'}</button>
+          <label className="story-field">
+            <span>Teks singkat <small>{caption.length}/54</small></span>
+            <textarea value={caption} maxLength="54" rows="3" onChange={(event) => setCaption(event.target.value)} />
+          </label>
+          <label className="story-field">
+            <span>Perbesar foto <small>{Math.round(zoom * 100)}%</small></span>
+            <input type="range" min="1" max="2" step="0.01" value={zoom} onChange={(event) => setZoom(Number(event.target.value))} disabled={!photo} />
+          </label>
+          <button className="story-download" onClick={downloadStory} disabled={!photo}><Download /> Unduh story</button>
+          <button className="story-share" onClick={shareStory} disabled={!photo}><Share2 /> Bagikan dari ponsel</button>
+          <button className="story-reset" onClick={reset} disabled={!photo}><RotateCcw /> Mulai ulang</button>
+          <p className="story-status" role="status">{status}</p>
+        </aside>
+      </section>
+    </main>
+  );
+}
+
+const bannerPresets = {
+  gofood: { label: 'GoFood', ratio: '16 / 9', hint: 'Tampilan lebar 16:9' },
+  shopee: { label: 'ShopeeFood', ratio: '2 / 1', hint: 'Tampilan ultra-wide 2:1' },
+};
+
+function BannerStudio() {
+  const params = new URLSearchParams(window.location.search);
+  const [platform, setPlatform] = useState(params.get('platform') === 'shopee' ? 'shopee' : 'gofood');
+  const [clean, setClean] = useState(params.get('clean') === '1');
+  const preset = bannerPresets[platform];
+
+  useEffect(() => {
+    document.title = 'JoyCafe Delivery Banner Studio';
+    document.body.classList.toggle('banner-clean-mode', clean);
+    return () => document.body.classList.remove('banner-clean-mode');
+  }, [clean]);
+
+  const choosePlatform = (value) => {
+    setPlatform(value);
+    const next = new URL(window.location.href);
+    next.searchParams.set('platform', value);
+    window.history.replaceState({}, '', next);
+  };
+
+  const toggleClean = async () => {
+    const nextClean = !clean;
+    setClean(nextClean);
+    const next = new URL(window.location.href);
+    next.searchParams.set('clean', nextClean ? '1' : '0');
+    window.history.replaceState({}, '', next);
+    if (nextClean && document.documentElement.requestFullscreen) {
+      await document.documentElement.requestFullscreen().catch(() => {});
+    }
+  };
+
+  return (
+    <main className={`banner-studio ${clean ? 'is-clean' : ''}`}>
+      {!clean && (
+        <header className="banner-toolbar">
+          <div>
+            <p>JoyCafe creative studio</p>
+            <h1>Banner outlet</h1>
+          </div>
+          <div className="banner-toolbar__actions">
+            <div className="banner-tabs" aria-label="Pilih format banner">
+              {Object.entries(bannerPresets).map(([key, value]) => (
+                <button key={key} className={platform === key ? 'active' : ''} onClick={() => choosePlatform(key)}>
+                  {value.label}<small>{value.hint}</small>
+                </button>
+              ))}
+            </div>
+            <button className="banner-preview-button" onClick={toggleClean}>Buka mode screenshot</button>
+          </div>
+        </header>
+      )}
+
+      <section className="banner-stage" aria-label={`${preset.label} banner preview`}>
+        <article className={`outlet-banner outlet-banner--${platform}`} style={{ '--banner-ratio': preset.ratio }}>
+          <img className="outlet-banner__photo" src="/joycafe-delivery-banner-bg.png" alt="Kopi, latte, dan potato wedges di meja JoyCafe" />
+          <div className="outlet-banner__shade" />
+          <div className="outlet-banner__content">
+            <div className="outlet-banner__brand">
+              <div className="outlet-banner__logo"><img src={logo} alt="" /></div>
+              <div><strong>JOYCAFE</strong><span>HOT &amp; COLD</span></div>
+            </div>
+            <p className="outlet-banner__eyebrow"><span>✦</span> LOCAL COFFEE · COMFORT FOOD</p>
+            <h2>Kopi lokal.<br /><em>Teman lengkap.</em></h2>
+            <p className="outlet-banner__menu">Americano <i /> Butterscotch <i /> Potato Wedges</p>
+            <div className="outlet-banner__meta">
+              <span><Clock3 /> Setiap hari · 12.00–00.00</span>
+              <span><MapPin /> Sidomulyo, Kota Batu</span>
+            </div>
+          </div>
+          <div className="outlet-banner__stamp"><span>GOOD FOOD</span><strong>GOOD<br />MOOD</strong></div>
+        </article>
+      </section>
+
+      {!clean && <p className="banner-help">Pilih format, lalu buka mode screenshot. Tekan Esc untuk keluar dari layar penuh.</p>}
+      {clean && <button className="banner-exit" onClick={toggleClean}>Kembali ke editor</button>}
+    </main>
+  );
 }
 
 function App() {
@@ -294,4 +625,8 @@ function App() {
   );
 }
 
-createRoot(document.getElementById('root')).render(<App />);
+const page = window.location.pathname.startsWith('/story')
+  ? <StoryStudio />
+  : window.location.pathname.startsWith('/banner') ? <BannerStudio /> : <App />;
+
+createRoot(document.getElementById('root')).render(page);
