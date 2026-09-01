@@ -185,7 +185,28 @@ function StoryStudio() {
   }).format(new Date()), []);
 
   useEffect(() => {
+    const robots = document.querySelector('meta[name="robots"]');
+    const description = document.querySelector('meta[name="description"]');
+    const canonical = document.querySelector('link[rel="canonical"]');
+    const previous = {
+      title: document.title,
+      robots: robots?.getAttribute('content'),
+      description: description?.getAttribute('content'),
+      canonical: canonical?.getAttribute('href'),
+    };
     document.title = 'Poster Harian JoyCafe';
+    robots?.setAttribute('content', 'noindex,nofollow,noarchive');
+    description?.setAttribute('content', 'Pembuat poster harian privat untuk JoyCafe. Halaman hanya dapat diakses melalui tautan langsung.');
+    canonical?.setAttribute('href', `${window.location.origin}/story`);
+    return () => {
+      document.title = previous.title;
+      if (previous.robots) robots?.setAttribute('content', previous.robots);
+      if (previous.description) description?.setAttribute('content', previous.description);
+      if (previous.canonical) canonical?.setAttribute('href', previous.canonical);
+    };
+  }, []);
+
+  useEffect(() => {
     return () => { if (photo) URL.revokeObjectURL(photo); };
   }, [photo]);
 
