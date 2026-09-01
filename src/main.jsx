@@ -242,10 +242,10 @@ function StoryStudio() {
     context.drawImage(userPhoto, x, y, width, height);
 
     const shade = context.createLinearGradient(0, 0, 0, canvas.height);
-    shade.addColorStop(0, 'rgba(18,18,16,.7)');
-    shade.addColorStop(.28, 'rgba(18,18,16,.38)');
-    shade.addColorStop(.58, 'rgba(18,18,16,.5)');
-    shade.addColorStop(1, 'rgba(18,18,16,.84)');
+    shade.addColorStop(0, 'rgba(47,33,26,.72)');
+    shade.addColorStop(.28, 'rgba(47,33,26,.38)');
+    shade.addColorStop(.58, 'rgba(47,33,26,.52)');
+    shade.addColorStop(1, 'rgba(47,33,26,.88)');
     context.fillStyle = shade;
     context.fillRect(0, 0, canvas.width, canvas.height);
     context.fillStyle = 'rgba(255,255,255,.14)';
@@ -256,12 +256,12 @@ function StoryStudio() {
     }
 
     context.textAlign = 'left';
-    context.fillStyle = '#f4ead6';
+    context.fillStyle = '#fff7e8';
     context.font = "900 24px 'DM Sans', sans-serif";
     context.fillText('JOYCAFE · DAILY POSTER', 72, 92);
     context.textAlign = 'right';
     context.fillText(date.toUpperCase(), 1008, 92);
-    context.strokeStyle = 'rgba(244,234,214,.55)';
+    context.strokeStyle = 'rgba(242,182,50,.72)';
     context.lineWidth = 2;
     context.beginPath();
     context.moveTo(72, 122);
@@ -269,7 +269,7 @@ function StoryStudio() {
     context.stroke();
 
     context.textAlign = 'center';
-    context.fillStyle = '#f4ead6';
+    context.fillStyle = '#fff7e8';
     context.font = "700 50px 'Fraunces', serif";
     context.fillText('COME IN!', 540, 590);
 
@@ -284,19 +284,19 @@ function StoryStudio() {
         context.font = `400 ${fontSize}px 'Archivo Black', sans-serif`;
       }
     }
-    context.fillStyle = '#e35b35';
+    context.fillStyle = '#e96f51';
     const headlineStart = headlineLines.length === 1 ? 745 : 690;
     headlineLines.slice(0, 3).forEach((line, index) => context.fillText(line, 540, headlineStart + index * 142));
 
     const detailsY = headlineStart + Math.min(headlineLines.length, 3) * 142 + 36;
-    context.fillStyle = '#f4ead6';
+    context.fillStyle = '#f2b632';
     context.font = "400 58px 'Archivo Black', sans-serif";
     context.fillText('12.00–00.00', 540, detailsY);
     context.font = "700 38px 'Fraunces', serif";
     const captionLines = wrapCanvasText(context, caption || 'Ngopi dulu, cerita kemudian.', 820).slice(0, 2);
     captionLines.forEach((line, index) => context.fillText(line, 540, detailsY + 82 + index * 44));
     context.font = "800 25px 'DM Sans', sans-serif";
-    context.fillStyle = 'rgba(244,234,214,.88)';
+    context.fillStyle = 'rgba(255,247,232,.88)';
     context.fillText('JL. BUKIT BERBUNGA NO. 230 · SIDOMULYO, KOTA BATU', 540, detailsY + 176);
 
     context.save();
@@ -305,17 +305,17 @@ function StoryStudio() {
     context.clip();
     context.drawImage(brandLogo, 456, 1541, 168, 168);
     context.restore();
-    context.strokeStyle = '#e35b35';
+    context.strokeStyle = '#f2b632';
     context.lineWidth = 7;
     context.beginPath();
     context.arc(540, 1625, 87, 0, Math.PI * 2);
     context.stroke();
 
-    context.fillStyle = '#f4ead6';
+    context.fillStyle = '#fff7e8';
     context.font = "900 26px 'DM Sans', sans-serif";
     context.fillText('JOYCAFE · HOT & COLD', 540, 1760);
     context.font = "800 23px 'DM Sans', sans-serif";
-    context.fillStyle = 'rgba(244,234,214,.78)';
+    context.fillStyle = '#f2b632';
     context.fillText('@JOYCAFE.SOSIALITA', 540, 1810);
 
     return new Promise((resolve) => canvas.toBlob(resolve, 'image/png'));
