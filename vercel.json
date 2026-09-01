@@ -1,4 +1,15 @@
 {
+  "headers": [
+    {
+      "source": "/story",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive"
+        }
+      ]
+    }
+  ],
   "rewrites": [
     {
       "source": "/(.*)",
