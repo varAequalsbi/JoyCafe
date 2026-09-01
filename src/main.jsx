@@ -274,23 +274,30 @@ function StoryStudio() {
     context.fillText('COME IN!', 540, 590);
 
     const posterHeadline = (headline || "WE'RE OPEN").trim();
-    context.font = "400 168px 'Archivo Black', sans-serif";
+    context.font = "700 204px 'Fraunces', serif";
     let headlineLines = posterHeadline.split(/\s+/);
     if (headlineLines.length > 2) headlineLines = wrapCanvasText(context, posterHeadline, 920);
     if (headlineLines.length === 1 && context.measureText(headlineLines[0]).width > 920) {
-      let fontSize = 168;
+      let fontSize = 204;
       while (fontSize > 96 && context.measureText(headlineLines[0]).width > 920) {
         fontSize -= 6;
-        context.font = `400 ${fontSize}px 'Archivo Black', sans-serif`;
+        context.font = `700 ${fontSize}px 'Fraunces', serif`;
       }
     }
-    context.fillStyle = '#e96f51';
     const headlineStart = headlineLines.length === 1 ? 745 : 690;
-    headlineLines.slice(0, 3).forEach((line, index) => context.fillText(line, 540, headlineStart + index * 142));
+    context.lineWidth = 10;
+    context.lineJoin = 'round';
+    context.strokeStyle = '#201c1a';
+    headlineLines.slice(0, 3).forEach((line, index) => {
+      const lineY = headlineStart + index * 158;
+      context.strokeText(line, 540, lineY);
+      context.fillStyle = index % 2 === 0 ? '#fff7e8' : '#f2b632';
+      context.fillText(line, 540, lineY);
+    });
 
-    const detailsY = headlineStart + Math.min(headlineLines.length, 3) * 142 + 36;
-    context.fillStyle = '#f2b632';
-    context.font = "400 58px 'Archivo Black', sans-serif";
+    const detailsY = headlineStart + Math.min(headlineLines.length, 3) * 158 + 34;
+    context.fillStyle = '#fff7e8';
+    context.font = "900 58px 'DM Sans', sans-serif";
     context.fillText('12.00–00.00', 540, detailsY);
     context.font = "700 38px 'Fraunces', serif";
     const captionLines = wrapCanvasText(context, caption || 'Ngopi dulu, cerita kemudian.', 820).slice(0, 2);
@@ -388,7 +395,7 @@ function StoryStudio() {
                 </div>
                 <div className="story-poster-message">
                   <span>COME IN!</span>
-                  <h2>{headline || "WE'RE OPEN"}</h2>
+                  <h2>{(headline || "WE'RE OPEN").trim().split(/\s+/).map((word, index) => <span key={`${word}-${index}`}>{word}</span>)}</h2>
                   <strong>12.00–00.00</strong>
                   <p>{caption || 'Ngopi dulu, cerita kemudian.'}</p>
                   <small>Jl. Bukit Berbunga No. 230 · Sidomulyo, Kota Batu</small>
