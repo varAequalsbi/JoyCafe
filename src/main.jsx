@@ -6,7 +6,6 @@ import {
   Download, ImagePlus, RotateCcw, Search, Share2, Sparkles, Upload, UsersRound,
   WalletCards, Wifi, X, Zap,
 } from 'lucide-react';
-import { SiInstagram } from 'react-icons/si';
 import logo from '../image.png';
 import menuData from './data/menu.json';
 import './styles.css';
@@ -173,6 +172,7 @@ function wrapCanvasText(context, text, maxWidth) {
 
 function StoryStudio() {
   const [photo, setPhoto] = useState('');
+  const [headline, setHeadline] = useState("WE'RE OPEN");
   const [caption, setCaption] = useState('Ngopi dulu, cerita kemudian.');
   const [zoom, setZoom] = useState(1);
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -185,7 +185,7 @@ function StoryStudio() {
   }).format(new Date()), []);
 
   useEffect(() => {
-    document.title = 'Story Harian JoyCafe';
+    document.title = 'Poster Harian JoyCafe';
     return () => { if (photo) URL.revokeObjectURL(photo); };
   }, [photo]);
 
@@ -226,7 +226,7 @@ function StoryStudio() {
 
   const stopDrag = () => { drag.current = null; };
 
-  const makeStory = async () => {
+  const makePoster = async () => {
     if (!photo) return null;
     await document.fonts?.ready;
     const [userPhoto, brandLogo] = await Promise.all([loadCanvasImage(photo), loadCanvasImage(logo)]);
@@ -242,79 +242,104 @@ function StoryStudio() {
     context.drawImage(userPhoto, x, y, width, height);
 
     const shade = context.createLinearGradient(0, 0, 0, canvas.height);
-    shade.addColorStop(0, 'rgba(8,24,17,.58)');
-    shade.addColorStop(.28, 'rgba(8,24,17,0)');
-    shade.addColorStop(.58, 'rgba(8,24,17,0)');
-    shade.addColorStop(1, 'rgba(8,24,17,.88)');
+    shade.addColorStop(0, 'rgba(18,18,16,.7)');
+    shade.addColorStop(.28, 'rgba(18,18,16,.38)');
+    shade.addColorStop(.58, 'rgba(18,18,16,.5)');
+    shade.addColorStop(1, 'rgba(18,18,16,.84)');
     context.fillStyle = shade;
     context.fillRect(0, 0, canvas.width, canvas.height);
-    context.strokeStyle = 'rgba(255,255,255,.34)';
-    context.lineWidth = 3;
-    context.strokeRect(3, 3, canvas.width - 6, canvas.height - 6);
+    context.fillStyle = 'rgba(255,255,255,.14)';
+    for (let index = 0; index < 520; index += 1) {
+      const grainX = (index * 83) % canvas.width;
+      const grainY = (index * 197) % canvas.height;
+      context.fillRect(grainX, grainY, index % 4 === 0 ? 3 : 2, index % 5 === 0 ? 3 : 2);
+    }
+
+    context.textAlign = 'left';
+    context.fillStyle = '#f4ead6';
+    context.font = "900 24px 'DM Sans', sans-serif";
+    context.fillText('JOYCAFE · DAILY POSTER', 72, 92);
+    context.textAlign = 'right';
+    context.fillText(date.toUpperCase(), 1008, 92);
+    context.strokeStyle = 'rgba(244,234,214,.55)';
+    context.lineWidth = 2;
+    context.beginPath();
+    context.moveTo(72, 122);
+    context.lineTo(1008, 122);
+    context.stroke();
+
+    context.textAlign = 'center';
+    context.fillStyle = '#f4ead6';
+    context.font = "700 50px 'Fraunces', serif";
+    context.fillText('COME IN!', 540, 590);
+
+    const posterHeadline = (headline || "WE'RE OPEN").trim();
+    context.font = "400 168px 'Archivo Black', sans-serif";
+    let headlineLines = posterHeadline.split(/\s+/);
+    if (headlineLines.length > 2) headlineLines = wrapCanvasText(context, posterHeadline, 920);
+    if (headlineLines.length === 1 && context.measureText(headlineLines[0]).width > 920) {
+      let fontSize = 168;
+      while (fontSize > 96 && context.measureText(headlineLines[0]).width > 920) {
+        fontSize -= 6;
+        context.font = `400 ${fontSize}px 'Archivo Black', sans-serif`;
+      }
+    }
+    context.fillStyle = '#e35b35';
+    const headlineStart = headlineLines.length === 1 ? 745 : 690;
+    headlineLines.slice(0, 3).forEach((line, index) => context.fillText(line, 540, headlineStart + index * 142));
+
+    const detailsY = headlineStart + Math.min(headlineLines.length, 3) * 142 + 36;
+    context.fillStyle = '#f4ead6';
+    context.font = "400 58px 'Archivo Black', sans-serif";
+    context.fillText('12.00–00.00', 540, detailsY);
+    context.font = "700 38px 'Fraunces', serif";
+    const captionLines = wrapCanvasText(context, caption || 'Ngopi dulu, cerita kemudian.', 820).slice(0, 2);
+    captionLines.forEach((line, index) => context.fillText(line, 540, detailsY + 82 + index * 44));
+    context.font = "800 25px 'DM Sans', sans-serif";
+    context.fillStyle = 'rgba(244,234,214,.88)';
+    context.fillText('JL. BUKIT BERBUNGA NO. 230 · SIDOMULYO, KOTA BATU', 540, detailsY + 176);
 
     context.save();
     context.beginPath();
-    context.arc(108, 112, 48, 0, Math.PI * 2);
+    context.arc(540, 1625, 84, 0, Math.PI * 2);
     context.clip();
-    context.drawImage(brandLogo, 60, 64, 96, 96);
+    context.drawImage(brandLogo, 456, 1541, 168, 168);
     context.restore();
-    context.strokeStyle = '#f3c54e';
-    context.lineWidth = 4;
+    context.strokeStyle = '#e35b35';
+    context.lineWidth = 7;
     context.beginPath();
-    context.arc(108, 112, 50, 0, Math.PI * 2);
+    context.arc(540, 1625, 87, 0, Math.PI * 2);
     context.stroke();
-    context.fillStyle = '#fff7e8';
-    context.font = "800 32px 'DM Sans', sans-serif";
-    context.fillText('JOYCAFE', 178, 123);
 
-    context.font = "800 24px 'DM Sans', sans-serif";
-    const dateText = date.toUpperCase();
-    const pillWidth = context.measureText(dateText).width + 54;
-    context.fillStyle = '#f3c54e';
-    context.beginPath();
-    context.roundRect(1010 - pillWidth, 78, pillWidth, 68, 34);
-    context.fill();
-    context.fillStyle = '#21352c';
-    context.textAlign = 'center';
-    context.fillText(dateText, 1010 - pillWidth / 2, 120);
-    context.textAlign = 'left';
-
-    context.fillStyle = '#f3c54e';
-    context.font = "900 23px 'DM Sans', sans-serif";
-    context.fillText('SIDOMULYO · KOTA BATU · 12.00–00.00', 68, 1540);
-    context.fillStyle = '#fff7e8';
-    context.font = "700 82px 'Fraunces', serif";
-    const lines = wrapCanvasText(context, caption || 'Cerita hari ini.', 900);
-    lines.forEach((line, index) => context.fillText(line, 68, 1642 + index * 82));
-    context.fillStyle = 'rgba(255,255,255,.82)';
-    context.font = "800 26px 'DM Sans', sans-serif";
-    context.fillText('@joycafe.sosialita', 68, 1850);
-    context.textAlign = 'right';
-    context.fillStyle = '#f3c54e';
-    context.fillText('JOYCAFE · HOT & COLD', 1012, 1850);
+    context.fillStyle = '#f4ead6';
+    context.font = "900 26px 'DM Sans', sans-serif";
+    context.fillText('JOYCAFE · HOT & COLD', 540, 1760);
+    context.font = "800 23px 'DM Sans', sans-serif";
+    context.fillStyle = 'rgba(244,234,214,.78)';
+    context.fillText('@JOYCAFE.SOSIALITA', 540, 1810);
 
     return new Promise((resolve) => canvas.toBlob(resolve, 'image/png'));
   };
 
   const downloadStory = async () => {
-    setStatus('Menyiapkan story…');
-    const blob = await makeStory();
+    setStatus('Menyiapkan poster…');
+    const blob = await makePoster();
     if (!blob) return;
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement('a');
     anchor.href = url;
-    anchor.download = `joycafe-story-${new Date().toISOString().slice(0, 10)}.png`;
+    anchor.download = `joycafe-poster-${new Date().toISOString().slice(0, 10)}.png`;
     anchor.click();
     URL.revokeObjectURL(url);
-    setStatus('Story berhasil diunduh.');
+    setStatus('Poster berhasil diunduh.');
   };
 
   const shareStory = async () => {
-    const blob = await makeStory();
+    const blob = await makePoster();
     if (!blob) return;
-    const file = new File([blob], `joycafe-story-${new Date().toISOString().slice(0, 10)}.png`, { type: 'image/png' });
+    const file = new File([blob], `joycafe-poster-${new Date().toISOString().slice(0, 10)}.png`, { type: 'image/png' });
     if (navigator.canShare?.({ files: [file] })) {
-      await navigator.share({ files: [file], title: 'JoyCafe Story' }).catch(() => {});
+      await navigator.share({ files: [file], title: 'Poster Harian JoyCafe' }).catch(() => {});
       setStatus('Pilih Instagram dari menu bagikan.');
     } else {
       await downloadStory();
@@ -326,25 +351,25 @@ function StoryStudio() {
     <main className="story-studio">
       <header className="story-topbar">
         <a className="story-brand" href="/" aria-label="Kembali ke JoyCafe"><Brand /></a>
-        <span><span className="story-live-dot" /> Pembuat story harian</span>
+        <span><span className="story-live-dot" /> Pembuat poster harian</span>
       </header>
 
       <section className="story-workspace">
         <div className="story-copy">
-          <p className="story-kicker">JOYCAFE STORY MAKER</p>
-          <h1>Bikin story hari ini.</h1>
-          <p>Masukkan fotomu ke bingkai JoyCafe, atur tampilannya, lalu unduh dalam ukuran Instagram Story.</p>
+          <p className="story-kicker">JOYCAFE DAILY POSTER STUDIO</p>
+          <h1>Bikin poster hari ini.</h1>
+          <p>Pilih foto, susun pesan JoyCafe, lalu ekspor sebagai poster vertikal yang siap diunggah.</p>
           <ol className="story-steps" aria-label="Cara membuat story">
             <li><b>01</b><span><strong>Pilih foto</strong><small>Dari kamera atau galeri</small></span></li>
             <li><b>02</b><span><strong>Sesuaikan</strong><small>Geser dan perbesar foto</small></span></li>
-            <li><b>03</b><span><strong>Unduh &amp; unggah</strong><small>Siap untuk Instagram Story</small></span></li>
+            <li><b>03</b><span><strong>Unduh &amp; unggah</strong><small>Poster 9:16 siap dipakai</small></span></li>
           </ol>
           <p className="story-privacy">Foto diproses di perangkatmu dan tidak dikirim ke server.</p>
         </div>
 
         <div className="story-preview-column">
-          <div className="story-phone-shell">
-            <div ref={preview} className={`story-canvas ${photo ? 'has-photo' : ''}`} aria-label="Pratinjau Instagram Story"
+          <div className="story-artboard-shell">
+            <div ref={preview} className={`story-canvas ${photo ? 'has-photo' : ''}`} aria-label="Pratinjau poster vertikal"
               onPointerDown={startDrag} onPointerMove={movePhoto} onPointerUp={stopDrag} onPointerCancel={stopDrag}>
               {photo ? (
                 <img className="story-user-photo" src={photo} alt="Foto pilihan untuk story"
@@ -358,34 +383,44 @@ function StoryStudio() {
               )}
               <div className="story-frame" aria-hidden="true">
                 <div className="story-frame-top">
-                  <div className="story-frame-logo"><img src={logo} alt="" /><b>JOYCAFE</b></div>
+                  <span>JOYCAFE · DAILY POSTER</span>
                   <span>{date}</span>
                 </div>
+                <div className="story-poster-message">
+                  <span>COME IN!</span>
+                  <h2>{headline || "WE'RE OPEN"}</h2>
+                  <strong>12.00–00.00</strong>
+                  <p>{caption || 'Ngopi dulu, cerita kemudian.'}</p>
+                  <small>Jl. Bukit Berbunga No. 230 · Sidomulyo, Kota Batu</small>
+                </div>
                 <div className="story-frame-bottom">
-                  <span className="story-frame-place">SIDOMULYO · KOTA BATU · 12.00–00.00</span>
-                  <p>{caption || 'Cerita hari ini.'}</p>
-                  <div><span>@joycafe.sosialita</span><SiInstagram /></div>
+                  <div className="story-frame-logo"><img src={logo} alt="" /><b>JOYCAFE <small>HOT &amp; COLD</small></b></div>
+                  <span>@joycafe.sosialita</span>
                 </div>
               </div>
             </div>
           </div>
-          <span className="story-size">1080 × 1920 px · 9:16</span>
+          <span className="story-size">POSTER VERTIKAL · 1080 × 1920 PX</span>
           {photo && <span className="story-drag-hint">Geser foto langsung pada pratinjau</span>}
         </div>
 
         <aside className="story-controls">
-          <div className="story-control-heading"><span>Editor</span><small>Story hari ini</small></div>
+          <div className="story-control-heading"><span>Editor</span><small>Poster hari ini</small></div>
           <input ref={fileInput} type="file" accept="image/jpeg,image/png,image/webp" onChange={choosePhoto} hidden />
           <button className="story-upload" onClick={() => fileInput.current?.click()}><Upload />{photo ? 'Ganti foto' : 'Pilih foto'}</button>
           <label className="story-field">
-            <span>Teks singkat <small>{caption.length}/54</small></span>
+            <span>Headline <small>{headline.length}/20</small></span>
+            <input value={headline} maxLength="20" onChange={(event) => setHeadline(event.target.value.toUpperCase())} />
+          </label>
+          <label className="story-field">
+            <span>Kalimat pendukung <small>{caption.length}/54</small></span>
             <textarea value={caption} maxLength="54" rows="3" onChange={(event) => setCaption(event.target.value)} />
           </label>
           <label className="story-field">
             <span>Perbesar foto <small>{Math.round(zoom * 100)}%</small></span>
             <input type="range" min="1" max="2" step="0.01" value={zoom} onChange={(event) => setZoom(Number(event.target.value))} disabled={!photo} />
           </label>
-          <button className="story-download" onClick={downloadStory} disabled={!photo}><Download /> Unduh story</button>
+          <button className="story-download" onClick={downloadStory} disabled={!photo}><Download /> Unduh poster</button>
           <button className="story-share" onClick={shareStory} disabled={!photo}><Share2 /> Bagikan dari ponsel</button>
           <button className="story-reset" onClick={reset} disabled={!photo}><RotateCcw /> Mulai ulang</button>
           <p className="story-status" role="status">{status}</p>
