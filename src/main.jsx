@@ -1,10 +1,11 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
+import { toPng } from 'html-to-image';
 import {
   ArrowRight, Bike, Camera, CarFront, Check, ChevronDown, Clock3, Coffee, ExternalLink,
   Gamepad2, Languages, MapPin, Menu as MenuIcon, PawPrint, Phone,
-  Download, ImagePlus, RotateCcw, Search, Share2, Sparkles, Upload, UsersRound,
-  WalletCards, Wifi, X, Zap,
+  Download, ImagePlus, Minus, Plus, RotateCcw, Search, Share2, ShoppingBag, Sparkles,
+  Trash2, Upload, UsersRound, WalletCards, Wifi, X, Zap,
 } from 'lucide-react';
 import logo from '../image.png';
 import menuData from './data/menu.json';
@@ -39,6 +40,13 @@ const copy = {
     menuEyebrow: 'Menu aktif JoyCafe', menuTitle: 'Pilih teman untuk meja penuh cerita.',
     menuIntro: 'Harga sudah termasuk pajak dan layanan. Ketersediaan dapat berubah; tanyakan kepada barista untuk pilihan hari ini.',
     search: 'Cari menu…', all: 'Semua', noResult: 'Menu tidak ditemukan.', clearSearch: 'Hapus pencarian',
+    addToCart: 'Tambah', cart: 'Keranjang', cartEmpty: 'Keranjangmu masih kosong.',
+    cartHint: 'Pilih menu, cek jumlahnya, lalu kirim pesanan ke WhatsApp JoyCafe.',
+    estimatedTotal: 'Total perkiraan', customerName: 'Nama pemesan', customerNamePlaceholder: 'Tulis nama kamu',
+    pickupTime: 'Waktu ambil / datang', pickupTimePlaceholder: 'Contoh: hari ini pukul 19.00',
+    orderNotes: 'Catatan', orderNotesPlaceholder: 'Contoh: less ice, tanpa gula',
+    sendWhatsapp: 'Kirim pesanan via WhatsApp', clearCart: 'Kosongkan', removeItem: 'Hapus dari keranjang',
+    decreaseItem: 'Kurangi jumlah', increaseItem: 'Tambah jumlah', closeCart: 'Tutup keranjang',
     beans: 'Kopi dari lereng Jawa Timur', beansTitle: 'Arjuno arabika. Dampit robusta.',
     beansText: 'JoyCafe menggunakan arabika dari Arjuno dan robusta dari Dampit dengan profil sangrai medium hingga gelap. Tanyakan kepada barista untuk biji dan seduhan yang tersedia hari ini.',
     bestEyebrow: 'JoyCafe cocok untuk', bestTitle: 'Pilih suasana yang pas buatmu.',
@@ -95,6 +103,13 @@ const copy = {
     menuEyebrow: 'JoyCafe current menu', menuTitle: 'Pick something for a table full of stories.',
     menuIntro: 'Prices include tax and service. Availability may change; ask the barista about today’s selection.',
     search: 'Search the menu…', all: 'All', noResult: 'No menu items found.', clearSearch: 'Clear search',
+    addToCart: 'Add', cart: 'Cart', cartEmpty: 'Your cart is still empty.',
+    cartHint: 'Choose your items, review the quantities, then send the order to JoyCafe on WhatsApp.',
+    estimatedTotal: 'Estimated total', customerName: 'Customer name', customerNamePlaceholder: 'Enter your name',
+    pickupTime: 'Pickup / arrival time', pickupTimePlaceholder: 'Example: today at 7:00 PM',
+    orderNotes: 'Notes', orderNotesPlaceholder: 'Example: less ice, no sugar',
+    sendWhatsapp: 'Send order via WhatsApp', clearCart: 'Clear', removeItem: 'Remove from cart',
+    decreaseItem: 'Decrease quantity', increaseItem: 'Increase quantity', closeCart: 'Close cart',
     beans: 'Coffee from East Java’s slopes', beansTitle: 'Arjuno arabica. Dampit robusta.',
     beansText: 'JoyCafe uses arabica from Arjuno and robusta from Dampit with medium-to-dark roast profiles. Ask the barista which beans and brewing choices are available today.',
     bestEyebrow: 'JoyCafe is best for', bestTitle: 'Choose the occasion that fits.',
@@ -546,12 +561,117 @@ function BannerStudio() {
   );
 }
 
+const bazaarMenu = [
+  { group: 'Minuman', name: 'Kopi Susu Creamy', note: 'Cold brew · susu creamy', price: '18K', tag: 'Best seller', image: '/menu-images/latte/Butterscotch_Latte.jpeg' },
+  { group: 'Minuman', name: 'Americano', note: 'Cold brew · clean & bold', price: '15K', tag: 'Cold brew', image: '/menu-images/coffee/americano.jpeg' },
+  { group: 'Minuman', name: 'Teh Fruity', note: 'Teh dingin · rasa buah', price: '13K', tag: 'Fresh', image: '/menu-images/exotic/Summer_mocktail.jpeg' },
+  { group: 'Minuman', name: 'Kopi Tubruk', note: 'Kopi hitam · pre-ground', price: '10K', tag: 'Hot', image: '/menu-images/coffee/Tubruk.jpeg' },
+  { group: 'Snack', name: 'Sourdough', note: '', price: '15K', tag: 'Snack' },
+  { group: 'Snack', name: 'Potato Wadges', note: '', price: '18K', tag: 'Snack' },
+  { group: 'Snack', name: 'French Fries', note: '', price: '15K', tag: 'Snack' },
+];
+
+function BazaarStudio() {
+  const downloadBazaarPng = async () => {
+    const flyer = document.querySelector('.bazar-flyer');
+    if (!flyer) return;
+    const flyerWidth = flyer.getBoundingClientRect().width;
+    const dataUrl = await toPng(flyer, { pixelRatio: 3508 / flyerWidth, cacheBust: true, backgroundColor: '#2f211a' });
+    const link = document.createElement('a');
+    link.download = 'joycafe-festival-kembang-api-a4-landscape.png';
+    link.href = dataUrl;
+    link.click();
+  };
+
+  useEffect(() => {
+    const previousTitle = document.title;
+    document.title = 'JoyCafe · Festival Kembang Api';
+    document.body.classList.add('bazar-mode');
+    return () => { document.title = previousTitle; document.body.classList.remove('bazar-mode'); };
+  }, []);
+
+  return (
+    <main className="bazar-page">
+      <button className="bazar-print-button" onClick={downloadBazaarPng}><Download size={16} /> Unduh PNG A4</button>
+      <section className="bazar-flyer" aria-label="JoyCafe Festival Kembang Api bazaar menu">
+        <div className="bazar-spark bazar-spark--one">✦</div><div className="bazar-spark bazar-spark--two">✧</div>
+        <header className="bazar-header">
+          <div className="bazar-brand"><img src={logo} alt="" /><span>JOYCAFE<small>HOT &amp; COLD</small></span></div>
+          <p className="bazar-date">6 SEPTEMBER</p>
+        </header>
+        <div className="bazar-hero">
+          <p className="bazar-kicker">FESTIVAL KEMBANG API · P2</p>
+          <h1>Ngopi<br /><em>sambil seru.</em></h1>
+          <p className="bazar-intro">Minuman dingin yang siap jalan,<br />dibuat cepat untuk malam yang ramai.</p>
+        </div>
+        <div className="bazar-menu">
+          <div className="bazar-menu-title"><span>QUICK POUR + QUICK BITE</span><strong>Pilih favoritmu</strong></div>
+          {['Minuman', 'Snack'].map((group) => <div className="bazar-group" key={group}><h3>{group}</h3>{bazaarMenu.filter((item) => item.group === group).map((item, index) => <article className={`bazar-item ${item.image ? '' : 'bazar-item--text'}`} key={item.name}><span className="bazar-number">{String(index + 1).padStart(2, '0')}</span>{item.image ? <img className="bazar-item-image" src={item.image} alt="" /> : null}<div><h2>{item.name}</h2><p>{item.note}</p></div><div className="bazar-item-end"><small>{item.tag}</small>{item.originalPrice && <del>{item.originalPrice}</del>}<strong>{item.price}</strong></div></article>)}</div>)}
+        </div>
+        <footer className="bazar-footer"><span>Cash · QRIS</span><span>SEDIA SELAMA STOK ADA</span><span>@joycafe.sosialita</span></footer>
+      </section>
+      <p className="bazar-note">CSS flyer preview · Harga dapat disesuaikan di <code>bazaarMenu</code>.</p>
+    </main>
+  );
+}
+
 function App() {
   const [lang, setLang] = useState('id');
   const [menuOpen, setMenuOpen] = useState(false);
   const [category, setCategory] = useState('all');
   const [query, setQuery] = useState('');
+  const [cart, setCart] = useState({});
+  const [cartOpen, setCartOpen] = useState(false);
+  const [customerName, setCustomerName] = useState('');
+  const [pickupTime, setPickupTime] = useState('');
+  const [orderNotes, setOrderNotes] = useState('');
   const t = copy[lang];
+
+  const productsById = useMemo(() => new Map(menu.flatMap((item) => item.products).map((product) => [product.id, product])), []);
+  const cartItems = useMemo(() => Object.entries(cart).map(([id, quantity]) => ({ ...productsById.get(id), quantity })).filter((item) => item.id), [cart, productsById]);
+  const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+  const cartTotal = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+
+  const updateCart = (productId, change) => {
+    setCart((current) => {
+      const quantity = Math.max(0, (current[productId] || 0) + change);
+      if (!quantity) {
+        const next = { ...current };
+        delete next[productId];
+        return next;
+      }
+      return { ...current, [productId]: quantity };
+    });
+  };
+
+  const sendOrder = () => {
+    if (!cartItems.length) return;
+    const itemLines = cartItems.map((item, index) => `${index + 1}. ${item.name} x${item.quantity} — ${rupiah(item.price * item.quantity)}`);
+    const fields = lang === 'id'
+      ? [
+        'Halo JoyCafe, saya ingin memesan:', '', ...itemLines, '', `Total perkiraan: ${rupiah(cartTotal)}`,
+        '', `Nama: ${customerName.trim() || '-'}`, `Waktu ambil / datang: ${pickupTime.trim() || '-'}`,
+        `Catatan: ${orderNotes.trim() || '-'}`, '', 'Mohon konfirmasi ketersediaan menu dan total pesanannya. Terima kasih.',
+      ]
+      : [
+        'Hello JoyCafe, I would like to order:', '', ...itemLines, '', `Estimated total: ${rupiah(cartTotal)}`,
+        '', `Name: ${customerName.trim() || '-'}`, `Pickup / arrival time: ${pickupTime.trim() || '-'}`,
+        `Notes: ${orderNotes.trim() || '-'}`, '', 'Please confirm item availability and the final total. Thank you.',
+      ];
+    track('whatsapp_order_click');
+    window.open(`https://wa.me/6282330777522?text=${encodeURIComponent(fields.join('\n'))}`, '_blank', 'noopener,noreferrer');
+  };
+
+  useEffect(() => {
+    if (!cartOpen) return undefined;
+    const closeOnEscape = (event) => { if (event.key === 'Escape') setCartOpen(false); };
+    document.addEventListener('keydown', closeOnEscape);
+    document.body.classList.add('cart-is-open');
+    return () => {
+      document.removeEventListener('keydown', closeOnEscape);
+      document.body.classList.remove('cart-is-open');
+    };
+  }, [cartOpen]);
 
   useEffect(() => {
     document.documentElement.lang = lang;
@@ -638,13 +758,16 @@ function App() {
                 <button className={category === 'all' ? 'active' : ''} onClick={() => setCategory('all')}>{t.all}</button>
                 {menu.map((item) => <button key={item.id} className={category === item.id ? 'active' : ''} onClick={() => setCategory(item.id)}>{categoryLabels[item.id][lang === 'id' ? 0 : 1]}</button>)}
               </div>
-              <label className="search-box"><Search size={18} /><span className="sr-only">{t.search}</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder={t.search} />{query && <button onClick={() => setQuery('')} aria-label={t.clearSearch}><X size={16} /></button>}</label>
+              <div className="menu-tools">
+                <label className="search-box"><Search size={18} /><span className="sr-only">{t.search}</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder={t.search} />{query && <button type="button" onClick={() => setQuery('')} aria-label={t.clearSearch}><X size={16} /></button>}</label>
+                <button className="cart-trigger" type="button" onClick={() => setCartOpen(true)} aria-label={`${t.cart}: ${cartCount}`}><ShoppingBag size={18} /><span>{t.cart}</span><strong>{cartCount}</strong></button>
+              </div>
             </div>
             <div className="menu-grid">
               {visibleMenu.map((item) => (
                 <article className="menu-category" key={item.id}>
                   <header><span>{String(menu.findIndex((entry) => entry.id === item.id) + 1).padStart(2, '0')}</span><h3>{categoryLabels[item.id][lang === 'id' ? 0 : 1]}</h3></header>
-                  <div>{item.products.map((product) => <p className="menu-item" key={product.id}><span>{product.name}{product.favorite && <small>★</small>}</span><i /><strong>{rupiah(product.price)}</strong></p>)}</div>
+                  <div>{item.products.map((product) => <div className="menu-item" key={product.id}><span>{product.name}{product.favorite && <small>★</small>}</span><i /><strong>{rupiah(product.price)}</strong>{cart[product.id] ? <div className="menu-quantity" aria-label={`${product.name}: ${cart[product.id]}`}><button type="button" onClick={() => updateCart(product.id, -1)} aria-label={`${t.decreaseItem}: ${product.name}`}><Minus size={14} /></button><b>{cart[product.id]}</b><button type="button" onClick={() => updateCart(product.id, 1)} aria-label={`${t.increaseItem}: ${product.name}`}><Plus size={14} /></button></div> : <button className="menu-add" type="button" onClick={() => updateCart(product.id, 1)}><Plus size={14} />{t.addToCart}</button>}</div>)}</div>
                 </article>
               ))}
             </div>
@@ -689,12 +812,33 @@ function App() {
         <div><p>Jl. Bukit Berbunga No. 230, Sidomulyo, Kota Batu</p><p>{t.footerNote}</p></div>
         <div className="footer-links"><a href={links.maps} target="_blank" rel="noreferrer">Google Maps</a><a href={links.instagram} target="_blank" rel="noreferrer">Instagram</a><a href={links.whatsapp} target="_blank" rel="noreferrer">WhatsApp</a></div>
       </footer>
+
+      {cartCount > 0 && <button className="floating-cart" type="button" onClick={() => setCartOpen(true)}><ShoppingBag size={19} /><span>{t.cart}</span><strong>{cartCount}</strong><em>{rupiah(cartTotal)}</em></button>}
+
+      {cartOpen && <div className="cart-overlay" onMouseDown={(event) => { if (event.target === event.currentTarget) setCartOpen(false); }}>
+        <aside className="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cart-title">
+          <header className="cart-header"><div><p className="eyebrow">JOYCAFE ORDER</p><h2 id="cart-title">{t.cart}</h2></div><button type="button" onClick={() => setCartOpen(false)} aria-label={t.closeCart}><X /></button></header>
+          <p className="cart-hint">{t.cartHint}</p>
+          {cartItems.length ? <>
+            <div className="cart-items">{cartItems.map((item) => <article key={item.id} className="cart-item"><div><h3>{item.name}</h3><p>{rupiah(item.price)} × {item.quantity}</p></div><div className="cart-item-actions"><button type="button" onClick={() => updateCart(item.id, -1)} aria-label={`${t.decreaseItem}: ${item.name}`}><Minus size={15} /></button><strong>{item.quantity}</strong><button type="button" onClick={() => updateCart(item.id, 1)} aria-label={`${t.increaseItem}: ${item.name}`}><Plus size={15} /></button><button className="cart-remove" type="button" onClick={() => updateCart(item.id, -item.quantity)} aria-label={`${t.removeItem}: ${item.name}`}><Trash2 size={15} /></button></div></article>)}</div>
+            <div className="cart-total"><span>{t.estimatedTotal}</span><strong>{rupiah(cartTotal)}</strong></div>
+            <div className="order-fields">
+              <label><span>{t.customerName}</span><input value={customerName} onChange={(event) => setCustomerName(event.target.value)} placeholder={t.customerNamePlaceholder} /></label>
+              <label><span>{t.pickupTime}</span><input value={pickupTime} onChange={(event) => setPickupTime(event.target.value)} placeholder={t.pickupTimePlaceholder} /></label>
+              <label><span>{t.orderNotes}</span><textarea rows="3" value={orderNotes} onChange={(event) => setOrderNotes(event.target.value)} placeholder={t.orderNotesPlaceholder} /></label>
+            </div>
+            <button className="whatsapp-order" type="button" onClick={sendOrder}>{t.sendWhatsapp}<ArrowRight size={18} /></button>
+            <button className="clear-cart" type="button" onClick={() => setCart({})}>{t.clearCart}</button>
+          </> : <div className="cart-empty"><ShoppingBag size={42} /><p>{t.cartEmpty}</p><button type="button" onClick={() => setCartOpen(false)}>{t.menu}</button></div>}
+        </aside>
+      </div>}
     </main>
   );
 }
 
 const page = window.location.pathname.startsWith('/story')
   ? <StoryStudio />
-  : window.location.pathname.startsWith('/banner') ? <BannerStudio /> : <App />;
+  : window.location.pathname.startsWith('/banner') ? <BannerStudio />
+  : window.location.pathname.startsWith('/bazar') ? <BazaarStudio /> : <App />;
 
 createRoot(document.getElementById('root')).render(page);
