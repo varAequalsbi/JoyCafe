@@ -39,6 +39,14 @@ const copy = {
     ],
     menuEyebrow: 'Menu aktif JoyCafe', menuTitle: 'Pilih teman untuk meja penuh cerita.',
     menuIntro: 'Harga sudah termasuk pajak dan layanan. Ketersediaan dapat berubah; tanyakan kepada barista untuk pilihan hari ini.',
+    orderGuideEyebrow: 'Cara pesan online', orderGuideTitle: 'Tiga langkah, langsung ke WhatsApp.',
+    orderGuideIntro: 'Tidak perlu membuat akun dan tidak ada pembayaran di website.',
+    orderGuideSteps: [
+      ['Pilih menu', 'Tekan Tambah pada makanan atau minuman yang kamu inginkan.'],
+      ['Periksa keranjang', 'Atur jumlah, lalu isi nama, waktu ambil atau datang, dan catatan pesanan.'],
+      ['Kirim ke WhatsApp', 'Tekan tombol WhatsApp. JoyCafe akan mengonfirmasi ketersediaan dan total akhir pesanan.'],
+    ],
+    orderGuideNote: 'Pesanan dianggap diterima setelah dikonfirmasi oleh JoyCafe melalui WhatsApp.',
     search: 'Cari menu…', all: 'Semua', noResult: 'Menu tidak ditemukan.', clearSearch: 'Hapus pencarian',
     addToCart: 'Tambah', cart: 'Keranjang', cartEmpty: 'Keranjangmu masih kosong.',
     cartHint: 'Pilih menu, cek jumlahnya, lalu kirim pesanan ke WhatsApp JoyCafe.',
@@ -102,6 +110,14 @@ const copy = {
     ],
     menuEyebrow: 'JoyCafe current menu', menuTitle: 'Pick something for a table full of stories.',
     menuIntro: 'Prices include tax and service. Availability may change; ask the barista about today’s selection.',
+    orderGuideEyebrow: 'How to order online', orderGuideTitle: 'Three steps, straight to WhatsApp.',
+    orderGuideIntro: 'No account is required, and there is no payment on this website.',
+    orderGuideSteps: [
+      ['Choose your items', 'Press Add on each food or drink you would like.'],
+      ['Review your cart', 'Adjust quantities, then add your name, pickup or arrival time, and order notes.'],
+      ['Send on WhatsApp', 'Press the WhatsApp button. JoyCafe will confirm availability and the final order total.'],
+    ],
+    orderGuideNote: 'Your order is accepted after JoyCafe confirms it with you on WhatsApp.',
     search: 'Search the menu…', all: 'All', noResult: 'No menu items found.', clearSearch: 'Clear search',
     addToCart: 'Add', cart: 'Cart', cartEmpty: 'Your cart is still empty.',
     cartHint: 'Choose your items, review the quantities, then send the order to JoyCafe on WhatsApp.',
@@ -753,6 +769,11 @@ function App() {
               <div><p className="eyebrow">{t.menuEyebrow}</p><h2>{t.menuTitle}</h2></div>
               <p>{t.menuIntro}</p>
             </div>
+            <section className="order-guide" aria-labelledby="order-guide-title">
+              <header><div><p className="eyebrow">{t.orderGuideEyebrow}</p><h3 id="order-guide-title">{t.orderGuideTitle}</h3></div><p>{t.orderGuideIntro}</p></header>
+              <ol>{t.orderGuideSteps.map(([title, text], index) => <li key={title}><span>{index + 1}</span><div><h4>{title}</h4><p>{text}</p></div></li>)}</ol>
+              <p className="order-guide-note"><Check size={17} />{t.orderGuideNote}</p>
+            </section>
             <div className="menu-controls">
               <div className="category-tabs" aria-label="Menu categories">
                 <button className={category === 'all' ? 'active' : ''} onClick={() => setCategory('all')}>{t.all}</button>
