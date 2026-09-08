@@ -290,10 +290,6 @@ function StoryStudio() {
     context.stroke();
 
     context.textAlign = 'center';
-    context.fillStyle = '#fff7e8';
-    context.font = "700 50px 'Fraunces', serif";
-    context.fillText('COME IN!', 540, 590);
-
     const posterHeadline = (headline || "WE'RE OPEN").trim();
     context.font = "700 204px 'Fraunces', serif";
     let headlineLines = posterHeadline.split(/\s+/);
@@ -306,6 +302,15 @@ function StoryStudio() {
       }
     }
     const headlineStart = headlineLines.length === 1 ? 745 : 690;
+    // Canvas text is baseline-aligned: reserve a real gap above the glyphs,
+    // including the headline outline, rather than using a fixed label baseline.
+    const headlineTop = headlineStart - context.measureText(headlineLines[0]).actualBoundingBoxAscent - 5;
+    context.save();
+    context.font = "700 50px 'Fraunces', serif";
+    context.fillStyle = '#fff7e8';
+    const labelDescent = context.measureText('COME IN!').actualBoundingBoxDescent;
+    context.fillText('COME IN!', 540, headlineTop - 36 - labelDescent);
+    context.restore();
     context.lineWidth = 10;
     context.lineJoin = 'round';
     context.strokeStyle = '#201c1a';
