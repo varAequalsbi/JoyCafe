@@ -1,5 +1,6 @@
 {
   "headers": [
+    { "source": "/card-game", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" }] },
     {
       "source": "/story",
       "headers": [
@@ -11,6 +12,7 @@
     }
   ],
   "rewrites": [
+    { "source": "/api/card-game/:path*", "destination": "/api/card-game" },
     {
       "source": "/(.*)",
       "destination": "/index.html"

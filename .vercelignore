@@ -1,0 +1,5 @@
+tmp
+.env*
+CARD_GAME_EVENT_PLAN.md
+.agents
+.claude

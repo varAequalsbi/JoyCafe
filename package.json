@@ -13,6 +13,7 @@
     "@vitejs/plugin-react": "latest",
     "html-to-image": "^1.11.13",
     "lucide-react": "latest",
+    "pg": "^8.23.0",
     "qrcode.react": "^4.2.0",
     "react": "latest",
     "react-dom": "latest",

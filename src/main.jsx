@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import logo from '../image.png';
 import menuData from './data/menu.json';
+import CardGameEvent from './CardGameEvent';
 import './styles.css';
 
 const links = {
@@ -860,6 +861,7 @@ function App() {
 const page = window.location.pathname.startsWith('/story')
   ? <StoryStudio />
   : window.location.pathname.startsWith('/banner') ? <BannerStudio />
-  : window.location.pathname.startsWith('/bazar') ? <BazaarStudio /> : <App />;
+  : window.location.pathname.startsWith('/bazar') ? <BazaarStudio />
+  : window.location.pathname.startsWith('/card-game') ? <CardGameEvent /> : <App />;
 
 createRoot(document.getElementById('root')).render(page);
