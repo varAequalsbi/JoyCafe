@@ -16,7 +16,7 @@ import {
 const STORAGE_KEY = 'joycafe-card-game-registrations-v1';
 const WHATSAPP_NUMBER = '6282233043528';
 const CAPACITY = 8;
-const EVENT_PRICE = 10000;
+const EVENT_PRICE = 15000;
 const DRINKS = ['Tubruk', 'Tubruk Filter', 'Original Tea'];
 
 async function api(path, method = 'GET', body) {
@@ -71,7 +71,7 @@ function whatsappPaymentUrl(registration) {
     `Nama tampilan: ${registration.displayName}`,
     `WhatsApp: ${registration.whatsapp}`,
     `Minuman: ${registration.drink}`,
-    'Biaya: Rp10.000',
+    'Biaya: Rp15.000',
     '',
     'Saya akan mengirim bukti pembayaran QRIS di chat ini untuk diverifikasi.',
   ].join('\n');
@@ -255,10 +255,10 @@ export default function CardGameEvent() {
         <div className="game-hero-copy">
           <p className="game-kicker">Satu meja · delapan pemain</p>
           <h1>Card Game<br /><em>Night.</em></h1>
-          <p className="game-lede">Malam permainan kartu santai di JoyCafe. Amankan kursimu, bayar Rp10.000 lewat QRIS, lalu tunggu konfirmasi dari tim kami.</p>
+          <p className="game-lede">Malam permainan kartu santai di JoyCafe. Amankan kursimu, bayar Rp15.000 lewat QRIS, lalu tunggu konfirmasi dari tim kami.</p>
           <div className="game-facts">
             <span><UsersRound size={18} /><b>{CAPACITY}</b> kursi</span>
-            <span><CreditCard size={18} /><b>Rp10K</b> per orang</span>
+            <span><CreditCard size={18} /><b>Rp15K</b> per orang</span>
             <span><Coffee size={18} /><b>1</b> minuman</span>
           </div>
           <p className="game-schedule">Tanggal dan waktu akan diumumkan</p>
@@ -310,7 +310,7 @@ export default function CardGameEvent() {
           <h2>Daftar, bayar, lalu kursimu kami konfirmasi.</h2>
           <ol>
             <li><span>01</span><div><strong>Isi data singkat</strong><p>Nama tampilanmu akan terlihat di peta kursi.</p></div></li>
-            <li><span>02</span><div><strong>Bayar Rp10.000</strong><p>Scan QRIS dan kirim bukti pembayaran melalui WhatsApp.</p></div></li>
+            <li><span>02</span><div><strong>Bayar Rp15.000</strong><p>Scan QRIS dan kirim bukti pembayaran melalui WhatsApp.</p></div></li>
             <li><span>03</span><div><strong>Tunggu konfirmasi</strong><p>Kursi resmi terkonfirmasi setelah pembayaran kami cocokkan.</p></div></li>
           </ol>
           <aside><ShieldCheck size={22} /><p>Hanya nama tampilan yang terlihat publik. Nama lengkap, nomor WhatsApp, dan bukti pembayaran tetap privat.</p></aside>
@@ -328,7 +328,7 @@ export default function CardGameEvent() {
             <form onSubmit={submitRegistration} noValidate>
               <div className="game-form-heading">
                 <div><p className="game-kicker">{CAPACITY - occupiedCount} kursi tersisa</p><h2>Ambil satu kursi</h2></div>
-                <span>Rp10.000</span>
+                <span>Rp15.000</span>
               </div>
 
               <label>
@@ -383,7 +383,7 @@ export default function CardGameEvent() {
           <section className="game-payment-modal" role="dialog" aria-modal="true" aria-labelledby="payment-title">
             <button className="game-payment-close" type="button" onClick={() => setLatestRegistration(null)} aria-label="Tutup"><X /></button>
             <p className="game-kicker">Satu langkah lagi</p>
-            <h2 id="payment-title">Bayar Rp10.000 via QRIS</h2>
+            <h2 id="payment-title">Bayar Rp15.000 via QRIS</h2>
             <p>Scan QRIS resmi Cafe Joy, lalu kirim bukti pembayaran ke WhatsApp agar kursimu dikonfirmasi.</p>
             <img className="game-qris" src="/card-game-qris.jpeg" alt="QRIS Cafe Joy Hot and Cold" />
             <div className="game-registration-code">
