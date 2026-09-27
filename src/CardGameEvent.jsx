@@ -261,7 +261,7 @@ export default function CardGameEvent() {
             <span><CreditCard size={18} /><b>Rp15K</b> per orang</span>
             <span><Coffee size={18} /><b>1</b> minuman</span>
           </div>
-          <p className="game-schedule">Tanggal dan waktu akan diumumkan</p>
+          <p className="game-schedule">Card Game Night dimulai pada <time dateTime="2026-10-03T20:00:00+07:00">3 Oktober 2026, pukul 20.00 WIB</time> (8 malam). Yuk, datang sebelum permainan dimulai!</p>
           <aside className="game-dealer-intro">
             <span><BadgeCheck size={22} /></span>
             <div>
